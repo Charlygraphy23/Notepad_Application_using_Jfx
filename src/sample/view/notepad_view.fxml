@@ -2,10 +2,12 @@
 
 <?import com.jfoenix.controls.JFXScrollPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Notepad_Controller">
    <top>
@@ -51,4 +53,11 @@
          </children>
       </JFXScrollPane>
    </center>
+   <bottom>
+      <Label fx:id="label" prefHeight="17.0" prefWidth="602.0" text="Label" BorderPane.alignment="TOP_LEFT">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+   </bottom>
 </BorderPane>

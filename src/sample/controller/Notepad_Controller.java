@@ -4,9 +4,11 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -63,14 +65,20 @@ public class Notepad_Controller extends Window {
     @FXML
     private MenuItem about;
 
+    @FXML
+    private Label label;
+
     private FileChooser fileChooser=null;
     private File temp=null;
     private static Font font;
     private String selectedText=null;
     private String replaceText=null;
+    private File tempFile=null;
 
     @FXML
     void initialize() throws IOException {
+
+
 
         newMenu.setOnAction(e -> {
             newMenuClicked();
@@ -151,6 +159,10 @@ public class Notepad_Controller extends Window {
             alert.show();
         });
 
+        textarea.setOnKeyTyped(e->{
+          label.setText(String.valueOf(textarea.getText().length()));
+        });
+
     }
 
 
@@ -175,12 +187,20 @@ public class Notepad_Controller extends Window {
            );
 
            File file=fileChooser.showSaveDialog(this);
-           System.out.println(file);
+           tempFile=file;
            if(file!=null){
                FileWriter writer=new FileWriter(file.getAbsoluteFile());
-               System.out.println(textarea.getText());
                writer.write(textarea.getText().trim());
                writer.close();
+               if(tempFile!=null){
+                   Stage stage=(Stage) textarea.getScene().getWindow();
+                   stage.setTitle(tempFile.getName());
+               }
+               else {
+                   Stage stage=(Stage) textarea.getScene().getWindow();
+                   stage.setTitle("untitled- Notepad.txt");
+               }
+
            }
        }
     }
@@ -194,6 +214,7 @@ public class Notepad_Controller extends Window {
         );
 
         File file = fileChooser.showOpenDialog(this);
+        tempFile=file;
         if(file!=null){
             temp=file;
         }
@@ -210,7 +231,16 @@ public class Notepad_Controller extends Window {
                 ex.printStackTrace();
             }
 
+            if(tempFile!=null){
+                Stage stage=(Stage) textarea.getScene().getWindow();
+                stage.setTitle(tempFile.getName());
+            }
+            else {
+                Stage stage=(Stage) textarea.getScene().getWindow();
+                stage.setTitle("untitled- Notepad.txt");
+            }
         }
+
     }
 
     private void saveAsMenuClicked() throws IOException {
@@ -221,16 +251,26 @@ public class Notepad_Controller extends Window {
         );
 
         File file=fileChooser.showSaveDialog(this);
+        tempFile=file;
         if(file!=null){
             FileWriter writer=new FileWriter(file.getAbsoluteFile());
             writer.write(textarea.getText().trim());
             writer.close();
+
+            if(tempFile!=null){
+                Stage stage=(Stage) textarea.getScene().getWindow();
+                stage.setTitle(tempFile.getName());
+            }
+            else {
+                Stage stage=(Stage) textarea.getScene().getWindow();
+                stage.setTitle("untitled- Notepad.txt");
+            }
         }
 
     }
 
     private void printMenuClicked() {
-        Stage s=new Stage();
+       // Stage s=new Stage();
 
         PrinterJob job=PrinterJob.createPrinterJob();
         boolean f=job.showPrintDialog(textarea.getScene().getWindow());
@@ -249,16 +289,8 @@ public class Notepad_Controller extends Window {
         System.out.println("from Init -"+font.getName());
     }
 
-    private Font getFont(){
-        return font;
-    }
-
     private void closeMenuClicked() {
         System.exit(0);
-    }
-
-    public void getReplaceText(String str){
-       replaceText=str;
     }
 
 }

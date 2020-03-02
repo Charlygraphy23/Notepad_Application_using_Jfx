@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("view/notepad_view.fxml"));
-        primaryStage.setTitle("Notepad Application");
+        primaryStage.setTitle("untitled- Notepad.txt");
         primaryStage.setScene(new Scene(root));
         try {
             Image icon=new Image("file:///C:/Users/Person/Downloads/n.jpg");
